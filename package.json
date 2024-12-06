@@ -1,13 +1,26 @@
 {
   "name": "pup_sdk",
-  "version": "1.0.1",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "version": "1.0.2",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
   },
-  "author": "",
+  "author": "Sylor-huang",
   "license": "ISC",
   "repository": "Sylor-huang/pump_sdk",
   "funding": "https://github.com/Sylor-huang/pump_sdk.git",

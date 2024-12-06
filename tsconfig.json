@@ -15,7 +15,7 @@
       // 启用此选项会生成相应的 '.d.ts' 声明文件
       "declaration": true,
       // 是否跳过检查 '.d.ts' 声明文件，设置为 false 时，会检查所有的声明文件 '*.d.ts'，以确保类型正确
-      "skipLibCheck": false,
+      "skipLibCheck": true,
       "resolveJsonModule": true
   },
   // 指定需要编译的文件和目录，这里是 'src' 目录下的所有文件

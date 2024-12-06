@@ -1,3 +1,3 @@
-export * from './src/constant/types';
-import PumpFunProgram from './src/pump/pfpProgram';
-export default PumpFunProgram;
+export * from './constant/types';
+import Fun from './pump/pfpProgram';
+export default Fun;

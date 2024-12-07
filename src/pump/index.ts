@@ -409,12 +409,11 @@ import {
      */
     public async compileBuyInstruction<B extends boolean = false>(params: BuyInstructionParam, isInitial: B): Promise<CompileBuyReturn<B>> {
         await this.checkRentExempt(params.trader);
+        const bondingCurve = await this.getBondingCurveAccount(params.token);
+        const tokenPrice = bondingCurve.getBuyPrice(params.solAmount);
+        const slippageCut = calculateSlippageBuy(params.solAmount, this.slippageBasis);
   
         if (isInitial) {
-            const globalAcc = await this.getPumpfunGlobal();
-            const tokenPrice = globalAcc.getInitialBuyPrice(params.solAmount);
-            const slippageCut = calculateSlippageBuy(params.solAmount, this.slippageBasis);
-  
             const ataInstruct = await this.createATAInstruct(params.trader, params.token);
             const buyInstruct = await this.compileTradeInstruction({
                 token: params.token,
@@ -425,10 +424,6 @@ import {
   
             return [ataInstruct, buyInstruct] as CompileBuyReturn<B>;
         } else {
-            const bondingCurve = await this.getBondingCurveAccount(params.token);
-            const tokenPrice = bondingCurve.getBuyPrice(params.solAmount);
-            const slippageCut = calculateSlippageBuy(params.solAmount, this.slippageBasis);
-  
             return await this.compileTradeInstruction({
                 token: params.token,
                 trader: params.trader,

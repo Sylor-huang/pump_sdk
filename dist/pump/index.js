@@ -314,10 +314,10 @@ class Fun {
      */
     async compileBuyInstruction(params, isInitial) {
         await this.checkRentExempt(params.trader);
+        const bondingCurve = await this.getBondingCurveAccount(params.token);
+        const tokenPrice = bondingCurve.getBuyPrice(params.solAmount);
+        const slippageCut = (0, utils_1.calculateSlippageBuy)(params.solAmount, this.slippageBasis);
         if (isInitial) {
-            const globalAcc = await this.getPumpfunGlobal();
-            const tokenPrice = globalAcc.getInitialBuyPrice(params.solAmount);
-            const slippageCut = (0, utils_1.calculateSlippageBuy)(params.solAmount, this.slippageBasis);
             const ataInstruct = await this.createATAInstruct(params.trader, params.token);
             const buyInstruct = await this.compileTradeInstruction({
                 token: params.token,
@@ -328,9 +328,6 @@ class Fun {
             return [ataInstruct, buyInstruct];
         }
         else {
-            const bondingCurve = await this.getBondingCurveAccount(params.token);
-            const tokenPrice = bondingCurve.getBuyPrice(params.solAmount);
-            const slippageCut = (0, utils_1.calculateSlippageBuy)(params.solAmount, this.slippageBasis);
             return await this.compileTradeInstruction({
                 token: params.token,
                 trader: params.trader,
